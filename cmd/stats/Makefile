@@ -1,13 +1,13 @@
 all: compile docker push clean
 
 compile:
-	echo '$@ rule TODO'
+	@echo '$@ rule TODO'
 
 docker:
-	echo '$@ rule TODO'
+	@echo '$@ rule TODO'
 
 push:
-	echo '$@ rule TODO'
+	@echo '$@ rule TODO'
 
 clean:
-	echo '$@ rule TODO'
+	@echo '$@ rule TODO'
