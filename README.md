@@ -2,6 +2,8 @@
 
 ## What is this?
 
+The codebase for an experiment involving the Go programming language, the Pachyderm tool, and Neural Networks.
+
 ## Overview of the code
 
 ```
