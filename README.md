@@ -17,6 +17,10 @@ The codebase for an experiment involving the Go programming language, the Pachyd
 └── doc   [documentation about this repository libraries]
 ```
 
+### cmd
+
+The commands directory (`cmd`) contains stand alone Go programs. Each subdirectory contains its own `Makefile`, `Dockerfile`, and Go main file which are structured in a pachyderm compatible way.
+
 ## Overview of the data
 
 ```
