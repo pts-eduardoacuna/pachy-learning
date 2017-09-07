@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 )
 
 func main() {
@@ -13,4 +14,6 @@ func main() {
 	flag.StringVar(&modelDir, "output-model", "", "The model output directory.")
 
 	flag.Parse()
+
+	fmt.Printf("Program `train` called with arguments input-training=`%s` and output-model=`%s`\n", trainingDir, modelDir)
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 )
 
 func main() {
@@ -13,4 +14,6 @@ func main() {
 	flag.StringVar(&graphDir, "output-graph", "", "The graphs data output directory.")
 
 	flag.Parse()
+
+	fmt.Printf("Program `image` called with arguments input-inference=`%s` and output-graph=`%s`\n", inferenceDir, graphDir)
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 )
 
 func main() {
@@ -15,4 +16,6 @@ func main() {
 	flag.StringVar(&inferenceDir, "output-inference", "", "The inference data output directory.")
 
 	flag.Parse()
+
+	fmt.Printf("Program `infer` called with arguments input-model=`%s`, input-attributes=`%s`, and output-inference=`%s`\n", modelDir, attributesDir, inferenceDir)
 }
