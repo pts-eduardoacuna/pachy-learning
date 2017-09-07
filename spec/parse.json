@@ -1,0 +1,22 @@
+{
+  "pipeline": {
+    "name": "training"
+  },
+  "transform": {
+    "image": "eduardoacye/pachy-learning-parse",
+    "cmd": [
+      "/parse",
+      "-input-mnist=/pfs/mnist",
+      "-output-training=/pfs/out"
+    ]
+  },
+  "parallelism_spec": {
+    "constant": "1"
+  },
+  "input": {
+    "atom": {
+      "repo": "mnist",
+      "glob": "/"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "pipeline": {
+    "name": "analysis"
+  },
+  "transform": {
+    "image": "eduardoacye/pachy-learning-stats",
+    "cmd": [
+      "/stats",
+      "-input-model=/pfs/model",
+      "-output-analysis=/pfs/out"
+    ]
+  },
+  "parallelism_spec": {
+    "constant": "1"
+  },
+  "input": {
+    "atom": {
+      "repo": "model",
+      "glob": "/"
+    }
+  }
+}

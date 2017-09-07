@@ -1,0 +1,22 @@
+{
+  "pipeline": {
+    "name": "graph"
+  },
+  "transform": {
+    "image": "eduardoacye/pachy-learning-image",
+    "cmd": [
+      "/image",
+      "-input-inference=/pfs/inference",
+      "-output-graph=/pfs/out"
+    ]
+  },
+  "parallelism_spec": {
+    "constant": "1"
+  },
+  "input": {
+    "atom": {
+      "repo": "inference",
+      "glob": "/*"
+    }
+  }
+}
