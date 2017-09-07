@@ -1,13 +1,13 @@
 all: compile docker push clean
 
 compile:
-	@echo '$@ rule TODO'
+	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o image .
 
 docker:
-	@echo '$@ rule TODO'
+	docker build --no-cache=true --force-rm=true -t eduardoacye/pachy-learning-image .
 
 push:
-	@echo '$@ rule TODO'
+	docker push eduardoacye/pachy-learning-image
 
 clean:
-	@echo '$@ rule TODO'
+	rm image
