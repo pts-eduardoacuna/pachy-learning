@@ -1,12 +1,14 @@
 
 
 # learning
-`import "./learning"`
+`import "github.com/pts-eduardoacuna/pachy-learning/learning"`
 
 * [Overview](#pkg-overview)
 * [Index](#pkg-index)
 
 ## <a name="pkg-overview">Overview</a>
+Package learning allows training and inference with ML models.
+
 
 
 
@@ -18,30 +20,34 @@
 
 
 #### <a name="pkg-files">Package files</a>
-[ann.go](/src/target/ann.go) 
+[ann.go](/src/github.com/pts-eduardoacuna/pachy-learning/learning/ann.go) 
 
 
 
 
 
-## <a name="Infer">func</a> [Infer](/src/target/ann.go?s=2534:2601#L82)
+## <a name="Infer">func</a> [Infer](/src/target/ann.go?s=3177:3244#L91)
 ``` go
 func Infer(net *NeuralNetwork, attributesSet *mat.Dense) *mat.Dense
 ```
-Infer is a function :)
+Infer user the network to evaluate each row in the attributes dataset.
 
 
 
-## <a name="Train">func</a> [Train](/src/target/ann.go?s=1641:1709#L53)
+## <a name="Train">func</a> [Train](/src/target/ann.go?s=2236:2304#L62)
 ``` go
 func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense)
 ```
-Train is a function :)
+Train adjusts the parameters of a neural network to fit the attributes dataset with
+the targets dataset.
+
+Both datasets must have the same number of rows, and their columns should match the
+dimension of the first and last layer of the network.
 
 
 
 
-## <a name="NeuralNetwork">type</a> [NeuralNetwork](/src/target/ann.go?s=113:436#L1)
+## <a name="NeuralNetwork">type</a> [NeuralNetwork](/src/target/ann.go?s=212:535#L2)
 ``` go
 type NeuralNetwork struct {
     Signals      []*mat.Dense
@@ -55,7 +61,7 @@ type NeuralNetwork struct {
     // contains filtered or unexported fields
 }
 ```
-NeuralNetwork is a structure :)
+NeuralNetwork is a supervised learning model for classification.
 
 
 
@@ -63,11 +69,15 @@ NeuralNetwork is a structure :)
 
 
 
-### <a name="NewNeuralNetwork">func</a> [NewNeuralNetwork](/src/target/ann.go?s=475:545#L16)
+### <a name="NewNeuralNetwork">func</a> [NewNeuralNetwork](/src/target/ann.go?s=838:908#L21)
 ``` go
 func NewNeuralNetwork(learningRate float64, arch []int) *NeuralNetwork
 ```
-NewNeuralNetwork is a function :)
+NewNeuralNetwork creates a NeuralNetwork with the given learning rate and architecture.
+
+The architecture consists of at least two elements, where each element specifies the amount of
+nodes in the layers. The first number corresponds to the input layer and the last to the output
+layer.
 
 
 

@@ -1,3 +1,4 @@
+// Package learning allows training and inference with ML models.
 package learning
 
 import (
@@ -7,7 +8,7 @@ import (
 	"gonum.org/v1/gonum/mat"
 )
 
-// NeuralNetwork is a structure :)
+// NeuralNetwork is a supervised learning model for classification.
 type NeuralNetwork struct {
 	Signals         []*mat.Dense
 	Outputs         []*mat.Dense
@@ -22,7 +23,11 @@ type NeuralNetwork struct {
 	predictionError *mat.Dense
 }
 
-// NewNeuralNetwork is a function :)
+// NewNeuralNetwork creates a NeuralNetwork with the given learning rate and architecture.
+//
+// The architecture consists of at least two elements, where each element specifies the amount of
+// nodes in the layers. The first number corresponds to the input layer and the last to the output
+// layer.
 func NewNeuralNetwork(learningRate float64, arch []int) *NeuralNetwork {
 	layerCount := len(arch)
 
@@ -59,7 +64,11 @@ func NewNeuralNetwork(learningRate float64, arch []int) *NeuralNetwork {
 	}
 }
 
-// Train is a function :)
+// Train adjusts the parameters of a neural network to fit the attributes dataset with
+// the targets dataset.
+//
+// Both datasets must have the same number of rows, and their columns should match the
+// dimension of the first and last layer of the network.
 func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense) {
 	trainingSize, _ := attributesSet.Dims()
 	attributesSize := net.attributesSize
@@ -88,7 +97,7 @@ func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense) {
 	net.ErrorHistory = errorHistory
 }
 
-// Infer is a function :)
+// Infer user the network to evaluate each row in the attributes dataset.
 func Infer(net *NeuralNetwork, attributesSet *mat.Dense) *mat.Dense {
 	datasetSize, _ := attributesSet.Dims()
 	attributesSize := net.attributesSize

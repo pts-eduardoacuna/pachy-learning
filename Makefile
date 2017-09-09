@@ -35,7 +35,7 @@ doc: lint
 		echo ""; \
 		echo "* Making docs for" $(REPO)/$$pkg; \
 		mkdir -p $(DOCDIR)/$$pkg; \
-		godoc2md -v ./$$pkg > $(DOCDIR)/$$pkg/README.md; \
+		godoc2md -v $(REPO)/$$pkg > $(DOCDIR)/$$pkg/README.md; \
 		echo ""; \
 	done
 
