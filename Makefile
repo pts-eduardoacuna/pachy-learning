@@ -4,7 +4,7 @@ CMDIR := cmd
 COMMANDS := image infer parse stats train
 
 DOCDIR := doc
-PACKAGES := learning mnist
+PACKAGES := learning mnist csnv
 
 .PHONE: all
 
@@ -24,7 +24,7 @@ test: lint
 	@echo "* Running tests *"
 	@echo "*****************"
 	@echo ""
-	go test ./...
+	go test -v ./...
 	@echo ""
 
 doc: lint
