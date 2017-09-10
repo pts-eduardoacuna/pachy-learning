@@ -13,7 +13,7 @@ func TestImagesDummyParsing(t *testing.T) {
 	rows := 2
 	cols := 3
 
-	doImagesParsing(t, filename, count, rows, cols)
+	doImagesDummyParsing(t, filename, count, rows, cols)
 }
 
 func TestBigImagesDummyParsing(t *testing.T) {
