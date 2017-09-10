@@ -1,3 +1,4 @@
+// Package mnist allows working with images and labels MNIST binary files.
 package mnist
 
 import (
@@ -11,14 +12,14 @@ type labelsHeader struct {
 	Count       int32
 }
 
-// LabelParser is a struct
+// LabelParser holds the state of a label parsing process.
 type LabelParser struct {
 	Count int
 	file  *os.File
 	buff  []byte
 }
 
-// NewLabelParser is a function
+// NewLabelParser creates a label parser from the given file.
 func NewLabelParser(file *os.File) (*LabelParser, error) {
 	labelsHeader := labelsHeader{}
 
@@ -37,7 +38,9 @@ func NewLabelParser(file *os.File) (*LabelParser, error) {
 	return parser, nil
 }
 
-// Parse returns
+// Parse reads a label from the parser file.
+//
+// The returned value is in the range [0,9].
 func (p *LabelParser) Parse() (int, error) {
 	_, err := p.file.Read(p.buff)
 	if err != nil {
@@ -53,7 +56,7 @@ type imagesHeader struct {
 	Columns     int32
 }
 
-// ImageParser is a struct
+// ImageParser holds the state of an image parsing process.
 type ImageParser struct {
 	Count   int
 	Rows    int
@@ -62,7 +65,7 @@ type ImageParser struct {
 	buff    []byte
 }
 
-// NewImageParser is a function
+// NewImageParser creates an image parser from the given file.
 func NewImageParser(file *os.File) (*ImageParser, error) {
 	imagesHeader := imagesHeader{}
 
@@ -86,7 +89,9 @@ func NewImageParser(file *os.File) (*ImageParser, error) {
 	return parser, nil
 }
 
-// Parse returns
+// Parse reads an image from the parser file and returns it as a slice of integers.
+//
+// The elements of the slice are the image's pixels grayscale values in the range [0,255].
 func (p *ImageParser) Parse() ([]int, error) {
 	_, err := p.file.Read(p.buff)
 	if err != nil {
