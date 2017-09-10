@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestImagesParsing(t *testing.T) {
+func TestImagesDummyParsing(t *testing.T) {
 	filename := "images_small_testfile"
 	count := 2
 	rows := 2
@@ -16,8 +16,17 @@ func TestImagesParsing(t *testing.T) {
 	doImagesParsing(t, filename, count, rows, cols)
 }
 
-func TestBigImagesParsing(t *testing.T) {
+func TestBigImagesDummyParsing(t *testing.T) {
 	filename := "images_big_testfile"
+	count := 60000
+	rows := 28
+	cols := 28
+
+	doImagesDummyParsing(t, filename, count, rows, cols)
+}
+
+func TestRealImagesParsing(t *testing.T) {
+	filename := "../data/train-images-idx3-ubyte"
 	count := 60000
 	rows := 28
 	cols := 28
@@ -25,12 +34,15 @@ func TestBigImagesParsing(t *testing.T) {
 	doImagesParsing(t, filename, count, rows, cols)
 }
 
-func doImagesParsing(t *testing.T, filename string, count, rows, cols int) {
+func doImagesDummyParsing(t *testing.T, filename string, count, rows, cols int) {
 	err := createTestImagesFile(filename, count, rows, cols)
 	if err != nil {
 		t.Error("couldn't create test images file", err)
 	}
+	doImagesParsing(t, filename, count, rows, cols)
+}
 
+func doImagesParsing(t *testing.T, filename string, count, rows, cols int) {
 	file, err := os.Open(filename)
 	if err != nil {
 		t.Error("couldn't open test images file", err)
@@ -74,22 +86,31 @@ func TestLabelsParsing(t *testing.T) {
 	filename := "labels_small_testfile"
 	count := 10
 
-	doLabelsParsing(t, filename, count)
+	doLabelsDummyParsing(t, filename, count)
 }
 
 func TestBigLabelsParsing(t *testing.T) {
 	filename := "labels_big_testfile"
 	count := 60000
 
+	doLabelsDummyParsing(t, filename, count)
+}
+
+func TestRealLabelsParsing(t *testing.T) {
+	filename := "../data/train-labels-idx1-ubyte"
+	count := 60000
+
 	doLabelsParsing(t, filename, count)
 }
 
-func doLabelsParsing(t *testing.T, filename string, count int) {
+func doLabelsDummyParsing(t *testing.T, filename string, count int) {
 	err := createTestLabelsFile(filename, count)
 	if err != nil {
 		t.Error("couldn't create test labels file", err)
 	}
+}
 
+func doLabelsParsing(t *testing.T, filename string, count int) {
 	file, err := os.Open(filename)
 	if err != nil {
 		t.Error("couldn't open test labels file", err)
