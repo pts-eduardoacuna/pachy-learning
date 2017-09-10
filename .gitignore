@@ -73,3 +73,6 @@ flycheck_*.el
 
 # Compressed MNIST images
 *.gz
+
+# Testfiles
+*_testfile
