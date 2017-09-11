@@ -4,7 +4,7 @@ CMDIR := cmd
 COMMANDS := image infer parse stats train
 
 DOCDIR := doc
-PACKAGES := learning mnist csnv json
+PACKAGES := learning mnist csnv json image
 
 .PHONE: all
 
