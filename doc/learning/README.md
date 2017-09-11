@@ -13,10 +13,10 @@ Package learning allows training and inference with ML models.
 
 
 ## <a name="pkg-index">Index</a>
-* [func Infer(net *NeuralNetwork, attributesSet *mat.Dense) *mat.Dense](#Infer)
-* [func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense)](#Train)
+* [func Infer(net *NeuralNetwork, attributesSet *mat.Dense) (*mat.Dense, error)](#Infer)
+* [func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense) error](#Train)
 * [type NeuralNetwork](#NeuralNetwork)
-  * [func NewNeuralNetwork(learningRate float64, arch []int) *NeuralNetwork](#NewNeuralNetwork)
+  * [func NewNeuralNetwork(learningRate float64, arch []int) (*NeuralNetwork, error)](#NewNeuralNetwork)
 
 
 #### <a name="pkg-files">Package files</a>
@@ -26,17 +26,17 @@ Package learning allows training and inference with ML models.
 
 
 
-## <a name="Infer">func</a> [Infer](/src/target/ann.go?s=3177:3244#L91)
+## <a name="Infer">func</a> [Infer](/src/target/ann.go?s=3815:3891#L110)
 ``` go
-func Infer(net *NeuralNetwork, attributesSet *mat.Dense) *mat.Dense
+func Infer(net *NeuralNetwork, attributesSet *mat.Dense) (*mat.Dense, error)
 ```
 Infer user the network to evaluate each row in the attributes dataset.
 
 
 
-## <a name="Train">func</a> [Train](/src/target/ann.go?s=2236:2304#L62)
+## <a name="Train">func</a> [Train](/src/target/ann.go?s=2385:2459#L68)
 ``` go
-func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense)
+func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense) error
 ```
 Train adjusts the parameters of a neural network to fit the attributes dataset with
 the targets dataset.
@@ -47,18 +47,19 @@ dimension of the first and last layer of the network.
 
 
 
-## <a name="NeuralNetwork">type</a> [NeuralNetwork](/src/target/ann.go?s=212:535#L2)
+## <a name="NeuralNetwork">type</a> [NeuralNetwork](/src/target/ann.go?s=219:514#L3)
 ``` go
 type NeuralNetwork struct {
-    Signals      []*mat.Dense
-    Outputs      []*mat.Dense
-    Weights      []*mat.Dense
-    Deltas       []*mat.Dense
-    Gradients    []*mat.Dense
-    ErrorHistory *mat.Dense
-    LayerCount   int
-    LearningRate float64
-    // contains filtered or unexported fields
+    Signals         []*mat.Dense
+    Outputs         []*mat.Dense
+    Weights         []*mat.Dense
+    Deltas          []*mat.Dense
+    Gradients       []*mat.Dense
+    ErrorHistory    *mat.Dense
+    LayerCount      int
+    LearningRate    float64
+    AttributesSize  int
+    PredictionsSize int
 }
 ```
 NeuralNetwork is a supervised learning model for classification.
@@ -69,9 +70,9 @@ NeuralNetwork is a supervised learning model for classification.
 
 
 
-### <a name="NewNeuralNetwork">func</a> [NewNeuralNetwork](/src/target/ann.go?s=838:908#L21)
+### <a name="NewNeuralNetwork">func</a> [NewNeuralNetwork](/src/target/ann.go?s=817:896#L21)
 ``` go
-func NewNeuralNetwork(learningRate float64, arch []int) *NeuralNetwork
+func NewNeuralNetwork(learningRate float64, arch []int) (*NeuralNetwork, error)
 ```
 NewNeuralNetwork creates a NeuralNetwork with the given learning rate and architecture.
 

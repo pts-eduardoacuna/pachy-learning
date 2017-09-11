@@ -7,8 +7,11 @@ import (
 	"gonum.org/v1/gonum/mat"
 )
 
-func IsLearning(N int) *mat.Dense {
-	net := NewNeuralNetwork(0.2, []int{1, 1})
+func IsLearning(N int) (*mat.Dense, error) {
+	net, err := NewNeuralNetwork(0.2, []int{1, 1})
+	if err != nil {
+		return nil, err
+	}
 
 	attributesSet := mat.NewDense(N, 1, nil)
 	rows, _ := attributesSet.Dims()
@@ -26,17 +29,20 @@ func IsLearning(N int) *mat.Dense {
 
 	Infer(net, attributesSet)
 
-	Train(net, attributesSet, targetsSet)
+	err = Train(net, attributesSet, targetsSet)
+	if err != nil {
+		return nil, err
+	}
 
-	return net.ErrorHistory
+	return net.ErrorHistory, nil
 }
 
 func TestIsLearning(t *testing.T) {
 	N := 1000
-	errorHistory := IsLearning(N)
+	errorHistory, err := IsLearning(N)
 
-	if errorHistory == nil {
-		t.Fail()
+	if err != nil {
+		t.Error("couldn't create and train a neural network", err)
 	}
 
 	errorA := errorHistory.At(0, 0)
@@ -44,7 +50,7 @@ func TestIsLearning(t *testing.T) {
 	errorC := errorHistory.At(N-1, 0)
 
 	if errorA <= errorB || errorB <= errorC {
-		t.Fail()
+		t.Error("couldn't make a neural network learn")
 	}
 }
 
@@ -54,8 +60,11 @@ func BenchmarkIsLearning(b *testing.B) {
 	}
 }
 
-func LearningXOR() *mat.Dense {
-	net := NewNeuralNetwork(0.2, []int{2, 2, 2})
+func LearningXOR() (*mat.Dense, error) {
+	net, err := NewNeuralNetwork(0.2, []int{2, 2, 2})
+	if err != nil {
+		return nil, err
+	}
 
 	attributesSet := mat.NewDense(4, 2, []float64{
 		0, 0,
@@ -72,29 +81,38 @@ func LearningXOR() *mat.Dense {
 	})
 
 	for i := 0; i < 1000; i++ {
-		Train(net, attributesSet, targetsSet)
+		err = Train(net, attributesSet, targetsSet)
+		if err != nil {
+			return nil, err
+		}
 	}
 
-	return Infer(net, attributesSet)
+	output, err := Infer(net, attributesSet)
+
+	return output, err
 }
 
 func TestLearningXOR(t *testing.T) {
-	predictionsSet := LearningXOR()
+	predictionsSet, err := LearningXOR()
+
+	if err != nil {
+		t.Error("couldn't create and train a neural network", err)
+	}
 
 	if predictionsSet.At(0, 0) < predictionsSet.At(0, 1) {
-		t.Fail()
+		t.Error("couldn't solve XOR problem")
 	}
 
 	if predictionsSet.At(1, 0) > predictionsSet.At(1, 1) {
-		t.Fail()
+		t.Error("couldn't solve XOR problem")
 	}
 
 	if predictionsSet.At(2, 0) < predictionsSet.At(2, 1) {
-		t.Fail()
+		t.Error("couldn't solve XOR problem")
 	}
 
 	if predictionsSet.At(3, 0) > predictionsSet.At(3, 1) {
-		t.Fail()
+		t.Error("couldn't solve XOR problem")
 	}
 }
 

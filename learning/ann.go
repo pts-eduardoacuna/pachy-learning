@@ -2,6 +2,7 @@
 package learning
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
 
@@ -18,9 +19,8 @@ type NeuralNetwork struct {
 	ErrorHistory    *mat.Dense
 	LayerCount      int
 	LearningRate    float64
-	attributesSize  int
-	predictionsSize int
-	predictionError *mat.Dense
+	AttributesSize  int
+	PredictionsSize int
 }
 
 // NewNeuralNetwork creates a NeuralNetwork with the given learning rate and architecture.
@@ -28,8 +28,12 @@ type NeuralNetwork struct {
 // The architecture consists of at least two elements, where each element specifies the amount of
 // nodes in the layers. The first number corresponds to the input layer and the last to the output
 // layer.
-func NewNeuralNetwork(learningRate float64, arch []int) *NeuralNetwork {
+func NewNeuralNetwork(learningRate float64, arch []int) (*NeuralNetwork, error) {
 	layerCount := len(arch)
+
+	if layerCount < 2 {
+		return nil, fmt.Errorf("malformed neural network architecture, expecting at least 2 layers but got %d", layerCount)
+	}
 
 	signals := make([]*mat.Dense, layerCount)
 	outputs := make([]*mat.Dense, layerCount)
@@ -51,7 +55,7 @@ func NewNeuralNetwork(learningRate float64, arch []int) *NeuralNetwork {
 	attributesSize := arch[0]
 	predictionsSize := arch[len(arch)-1]
 
-	return &NeuralNetwork{
+	net := &NeuralNetwork{
 		Signals:         signals,
 		Outputs:         outputs,
 		Weights:         weights,
@@ -59,9 +63,11 @@ func NewNeuralNetwork(learningRate float64, arch []int) *NeuralNetwork {
 		Gradients:       gradients,
 		LayerCount:      layerCount,
 		LearningRate:    learningRate,
-		attributesSize:  attributesSize,
-		predictionsSize: predictionsSize,
+		AttributesSize:  attributesSize,
+		PredictionsSize: predictionsSize,
 	}
+
+	return net, nil
 }
 
 // Train adjusts the parameters of a neural network to fit the attributes dataset with
@@ -69,10 +75,21 @@ func NewNeuralNetwork(learningRate float64, arch []int) *NeuralNetwork {
 //
 // Both datasets must have the same number of rows, and their columns should match the
 // dimension of the first and last layer of the network.
-func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense) {
-	trainingSize, _ := attributesSet.Dims()
-	attributesSize := net.attributesSize
-	targetsSize := net.predictionsSize
+func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense) error {
+	trainingSize, attributesSize := attributesSet.Dims()
+	targetsRows, targetsSize := targetsSet.Dims()
+
+	if attributesSize != net.AttributesSize {
+		return fmt.Errorf("malformed training inputs, expecting %d columns but got %d", net.AttributesSize, attributesSize)
+	}
+
+	if targetsSize != net.PredictionsSize {
+		return fmt.Errorf("malformed training outputs, expecting %d columns but got %d", net.PredictionsSize, targetsSize)
+	}
+
+	if targetsRows != trainingSize {
+		return fmt.Errorf("malformed training data, %d inputs and %d outputs should don't match", trainingSize, targetsRows)
+	}
 
 	realOutput := mat.NewDense(targetsSize, 1, nil)
 	errorHistory := mat.NewDense(trainingSize, targetsSize, nil)
@@ -95,13 +112,19 @@ func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense) {
 	}
 
 	net.ErrorHistory = errorHistory
+
+	return nil
 }
 
 // Infer user the network to evaluate each row in the attributes dataset.
-func Infer(net *NeuralNetwork, attributesSet *mat.Dense) *mat.Dense {
-	datasetSize, _ := attributesSet.Dims()
-	attributesSize := net.attributesSize
-	predictionsSize := net.predictionsSize
+func Infer(net *NeuralNetwork, attributesSet *mat.Dense) (*mat.Dense, error) {
+	datasetSize, attributesSize := attributesSet.Dims()
+
+	if attributesSize != net.AttributesSize {
+		return nil, fmt.Errorf("malformed inference inputs, expecting %d columns but got %d", net.AttributesSize, attributesSize)
+	}
+
+	predictionsSize := net.PredictionsSize
 
 	predictionsSet := mat.NewDense(datasetSize, predictionsSize, nil)
 
@@ -119,7 +142,7 @@ func Infer(net *NeuralNetwork, attributesSet *mat.Dense) *mat.Dense {
 
 	}
 
-	return predictionsSet
+	return predictionsSet, nil
 }
 
 func newRandomWeightMatrix(rows, cols int) *mat.Dense {
