@@ -41,8 +41,13 @@ func NewNeuralNetwork(learningRate float64, arch []int) (*NeuralNetwork, error) 
 	deltas := make([]*mat.Dense, layerCount)
 	gradients := make([]*mat.Dense, layerCount)
 
+	nilDense := mat.NewDense(0, 0, nil)
 	outputs[0] = mat.NewDense(arch[0]+1, 1, nil)
 	outputs[0].Set(0, 0, 1)
+	signals[0] = nilDense
+	weights[0] = nilDense
+	deltas[0] = nilDense
+	gradients[0] = nilDense
 	for layer := 1; layer < layerCount; layer++ {
 		signals[layer] = mat.NewDense(arch[layer], 1, nil)
 		outputs[layer] = mat.NewDense(arch[layer]+1, 1, nil)
@@ -52,6 +57,7 @@ func NewNeuralNetwork(learningRate float64, arch []int) (*NeuralNetwork, error) 
 		gradients[layer] = mat.NewDense(arch[layer-1]+1, arch[layer], nil)
 	}
 
+	errorHistory := nilDense
 	attributesSize := arch[0]
 	predictionsSize := arch[len(arch)-1]
 
@@ -61,6 +67,7 @@ func NewNeuralNetwork(learningRate float64, arch []int) (*NeuralNetwork, error) 
 		Weights:         weights,
 		Deltas:          deltas,
 		Gradients:       gradients,
+		ErrorHistory:    errorHistory,
 		LayerCount:      layerCount,
 		LearningRate:    learningRate,
 		AttributesSize:  attributesSize,

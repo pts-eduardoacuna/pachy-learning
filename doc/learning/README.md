@@ -26,7 +26,7 @@ Package learning allows training and inference with ML models.
 
 
 
-## <a name="Infer">func</a> [Infer](/src/target/ann.go?s=3815:3891#L110)
+## <a name="Infer">func</a> [Infer](/src/target/ann.go?s=4004:4080#L117)
 ``` go
 func Infer(net *NeuralNetwork, attributesSet *mat.Dense) (*mat.Dense, error)
 ```
@@ -34,7 +34,7 @@ Infer user the network to evaluate each row in the attributes dataset.
 
 
 
-## <a name="Train">func</a> [Train](/src/target/ann.go?s=2385:2459#L68)
+## <a name="Train">func</a> [Train](/src/target/ann.go?s=2574:2648#L75)
 ``` go
 func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense) error
 ```
