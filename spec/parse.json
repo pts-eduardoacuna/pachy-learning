@@ -1,13 +1,13 @@
 {
   "pipeline": {
-    "name": "training"
+    "name": "mnist-csv"
   },
   "transform": {
     "image": "eduardoacye/pachy-learning-parse",
     "cmd": [
       "/parse",
       "-input-mnist=/pfs/mnist",
-      "-output-training=/pfs/out"
+      "-output-mnist-csv=/pfs/out"
     ]
   },
   "parallelism_spec": {

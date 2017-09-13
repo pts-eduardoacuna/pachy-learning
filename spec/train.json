@@ -6,7 +6,7 @@
     "image": "eduardoacye/pachy-learning-train",
     "cmd": [
       "/train",
-      "-input-training=/pfs/training",
+      "-input-training=/pfs/mnist-csv",
       "-output-model=/pfs/out"
     ]
   },
