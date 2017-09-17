@@ -24,11 +24,11 @@ Package gob allows serializing and deserializing structures.
 
 
 
-## <a name="ReadBinaryObject">func</a> [ReadBinaryObject](/src/target/generic.go?s=385:444#L6)
+## <a name="ReadBinaryObject">func</a> [ReadBinaryObject](/src/target/generic.go?s=384:443#L6)
 ``` go
 func ReadBinaryObject(file *os.File, obj interface{}) error
 ```
-ReadBinaryObject reads the gob file and puts it's content on the given object.
+ReadBinaryObject reads the gob file and puts its content on the given object.
 
 
 

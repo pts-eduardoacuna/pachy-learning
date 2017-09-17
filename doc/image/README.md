@@ -24,11 +24,11 @@ Package image allows reading and writing PNG images via int slices.
 
 
 
-## <a name="ReadPNG">func</a> [ReadPNG](/src/target/png.go?s=580:622#L17)
+## <a name="ReadPNG">func</a> [ReadPNG](/src/target/png.go?s=579:621#L17)
 ``` go
 func ReadPNG(file *os.File) ([]int, error)
 ```
-ReadPNG reads a PNG image and computes it's pixel data.
+ReadPNG reads a PNG image and computes its pixel data.
 
 
 

@@ -23,7 +23,7 @@ func WritePNG(file *os.File, rows, cols int, pixels []int) error {
 	return png.Encode(file, img)
 }
 
-// ReadPNG reads a PNG image and computes it's pixel data.
+// ReadPNG reads a PNG image and computes its pixel data.
 func ReadPNG(file *os.File) ([]int, error) {
 	img, err := png.Decode(file)
 	if err != nil {

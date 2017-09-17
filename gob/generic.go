@@ -12,7 +12,7 @@ func WriteBinaryObject(file *os.File, obj interface{}) error {
 	return enc.Encode(obj)
 }
 
-// ReadBinaryObject reads the gob file and puts it's content on the given object.
+// ReadBinaryObject reads the gob file and puts its content on the given object.
 func ReadBinaryObject(file *os.File, obj interface{}) error {
 	dec := gob.NewDecoder(file)
 	return dec.Decode(obj)
