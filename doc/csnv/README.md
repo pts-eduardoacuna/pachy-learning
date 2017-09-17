@@ -11,8 +11,12 @@
 
 
 ## <a name="pkg-index">Index</a>
+* [func ReadAllFloats(r *csv.Reader) ([][]float64, error)](#ReadAllFloats)
+* [func ReadAllInts(r *csv.Reader) ([][]int, error)](#ReadAllInts)
 * [func ReadFloats(r *csv.Reader) ([]float64, error)](#ReadFloats)
 * [func ReadInts(r *csv.Reader) ([]int, error)](#ReadInts)
+* [func WriteAllFloats(w *csv.Writer, allFloats [][]float64) error](#WriteAllFloats)
+* [func WriteAllInts(w *csv.Writer, allInts [][]int) error](#WriteAllInts)
 * [func WriteFloats(w *csv.Writer, floats []float64) error](#WriteFloats)
 * [func WriteInts(w *csv.Writer, ints []int) error](#WriteInts)
 
@@ -24,35 +28,67 @@
 
 
 
-## <a name="ReadFloats">func</a> [ReadFloats](/src/target/numeric.go?s=143:192#L1)
+## <a name="ReadAllFloats">func</a> [ReadAllFloats](/src/target/numeric.go?s=1310:1364#L54)
+``` go
+func ReadAllFloats(r *csv.Reader) ([][]float64, error)
+```
+ReadAllFloats is a wrapper around the standard CSV ReadAll for records containing float64.
+
+
+
+## <a name="ReadAllInts">func</a> [ReadAllInts](/src/target/numeric.go?s=2546:2594#L101)
+``` go
+func ReadAllInts(r *csv.Reader) ([][]int, error)
+```
+ReadAllInts is a wrapper around the standard CSV ReadAll for records containing int.
+
+
+
+## <a name="ReadFloats">func</a> [ReadFloats](/src/target/numeric.go?s=1035:1084#L43)
 ``` go
 func ReadFloats(r *csv.Reader) ([]float64, error)
 ```
-ReadFloats is a wrapper around the standard CSV reader for records containing float64.
+ReadFloats is a wrapper around the standard CSV Read for records containing float64.
 
 
 
-## <a name="ReadInts">func</a> [ReadInts](/src/target/numeric.go?s=835:878#L26)
+## <a name="ReadInts">func</a> [ReadInts](/src/target/numeric.go?s=2289:2332#L90)
 ``` go
 func ReadInts(r *csv.Reader) ([]int, error)
 ```
-ReadInts is a wrapper around the standard CSV reader for records containing int.
+ReadInts is a wrapper around the standard CSV Read for records containing int.
 
 
 
-## <a name="WriteFloats">func</a> [WriteFloats](/src/target/numeric.go?s=543:598#L16)
+## <a name="WriteAllFloats">func</a> [WriteAllFloats](/src/target/numeric.go?s=1963:2026#L79)
+``` go
+func WriteAllFloats(w *csv.Writer, allFloats [][]float64) error
+```
+WriteAllFloats is a wrapper around the standard CSV WriteAll for records containing float64.
+
+
+
+## <a name="WriteAllInts">func</a> [WriteAllInts](/src/target/numeric.go?s=3153:3208#L126)
+``` go
+func WriteAllInts(w *csv.Writer, allInts [][]int) error
+```
+WriteAllInts is a wrapper around the standard CSV WriteAll for records containing int.
+
+
+
+## <a name="WriteFloats">func</a> [WriteFloats](/src/target/numeric.go?s=1742:1797#L72)
 ``` go
 func WriteFloats(w *csv.Writer, floats []float64) error
 ```
-WriteFloats is a wrapper around the standard CSV writer for record containing float64.
+WriteFloats is a wrapper around the standard CSV Write for records containing float64.
 
 
 
-## <a name="WriteInts">func</a> [WriteInts](/src/target/numeric.go?s=1219:1266#L43)
+## <a name="WriteInts">func</a> [WriteInts](/src/target/numeric.go?s=2950:2997#L119)
 ``` go
 func WriteInts(w *csv.Writer, ints []int) error
 ```
-WriteInts is a wrapper around the standard CSV writer for record containing int.
+WriteInts is a wrapper around the standard CSV Write for records containing int.
 
 
 
