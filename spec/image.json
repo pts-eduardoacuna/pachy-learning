@@ -1,12 +1,12 @@
 {
   "pipeline": {
-    "name": "graph"
+    "name": "digits-csv"
   },
   "transform": {
     "image": "eduardoacye/pachy-learning-image",
     "cmd": [
       "/image",
-      "-input-inference=/pfs/inference",
+      "-input-inference=/pfs/digits-png",
       "-output-graph=/pfs/out"
     ]
   },
@@ -15,7 +15,7 @@
   },
   "input": {
     "atom": {
-      "repo": "inference",
+      "repo": "digits-png",
       "glob": "/*"
     }
   }

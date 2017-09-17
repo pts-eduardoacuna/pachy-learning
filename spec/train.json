@@ -6,7 +6,8 @@
     "image": "eduardoacye/pachy-learning-train",
     "cmd": [
       "/train",
-      "-input-training=/pfs/mnist-csv",
+      "-input-mnist-csv=/pfs/mnist-csv",
+      "-input-analysis=/pfs/analysis",
       "-output-model=/pfs/out"
     ]
   },
@@ -14,9 +15,19 @@
     "constant": "1"
   },
   "input": {
-    "atom": {
-      "repo": "training",
-      "glob": "/"
-    }
+    "cross": [
+      {
+        "atom": {
+          "repo": "mnist-csv",
+          "glob": "/"
+        }
+      },
+      {
+        "atom": {
+          "repo": "analysis",
+          "glob": "/"
+        }
+      }
+    ]
   }
 }

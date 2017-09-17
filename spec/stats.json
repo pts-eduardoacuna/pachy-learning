@@ -6,7 +6,7 @@
     "image": "eduardoacye/pachy-learning-stats",
     "cmd": [
       "/stats",
-      "-input-model=/pfs/model",
+      "-input-mnist-csv=/pfs/mnist-csv",
       "-output-analysis=/pfs/out"
     ]
   },
@@ -15,7 +15,7 @@
   },
   "input": {
     "atom": {
-      "repo": "model",
+      "repo": "mnist-csv",
       "glob": "/"
     }
   }

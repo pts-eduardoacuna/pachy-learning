@@ -7,7 +7,7 @@
     "cmd": [
       "/infer",
       "-input-model=/pfs/model",
-      "-input-attributes=/pfs/attributes",
+      "-input-digits-csv=/pfs/digits-csv",
       "-output-inference=/pfs/out"
     ]
   },
@@ -18,7 +18,7 @@
     "cross": [
       {
         "atom": {
-          "repo": "attributes",
+          "repo": "digits-csv",
           "glob": "/*"
         }
       },
