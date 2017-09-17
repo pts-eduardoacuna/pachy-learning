@@ -7,13 +7,15 @@ import (
 
 func main() {
 	// Handle command line arguments
-	var trainingDir string
+	var mnistCsvDir string
+	var analysisDir string
 	var modelDir string
 
-	flag.StringVar(&trainingDir, "input-training", "", "The directory containing the training data.")
+	flag.StringVar(&mnistCsvDir, "input-mnist-csv", "", "The directory containing the MNIST files as CSV.")
+	flag.StringVar(&analysisDir, "input-analysis", "", "The directory containing the ANN model analysis.")
 	flag.StringVar(&modelDir, "output-model", "", "The model output directory.")
 
 	flag.Parse()
 
-	fmt.Printf("Program `train` called with arguments input-training=`%s` and output-model=`%s`\n", trainingDir, modelDir)
+	fmt.Printf("Program `train` called with arguments input-mnist-csv=`%s`, input-analysis=`%s`, and output-model=`%s`\n", mnistCsvDir, analysisDir, modelDir)
 }

@@ -130,5 +130,5 @@ func main() {
 }
 
 func createLogger(file *os.File) *log.Logger {
-	return log.New(file, "❯❯ ", log.LstdFlags|log.Lshortfile)
+	return log.New(file, "❯ ", log.LstdFlags|log.Lshortfile)
 }

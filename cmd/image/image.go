@@ -7,13 +7,13 @@ import (
 
 func main() {
 	// Handle command line arguments
-	var inferenceDir string
-	var graphDir string
+	var digitsPngDir string
+	var digitsCsvDir string
 
-	flag.StringVar(&inferenceDir, "input-inference", "", "The directory containing the inferences files.")
-	flag.StringVar(&graphDir, "output-graph", "", "The graphs data output directory.")
+	flag.StringVar(&digitsPngDir, "input-digits-png", "", "The directory containing the image files as PNG.")
+	flag.StringVar(&digitsCsvDir, "output-digits-csv", "", "The digits as CSV output directory.")
 
 	flag.Parse()
 
-	fmt.Printf("Program `image` called with arguments input-inference=`%s` and output-graph=`%s`\n", inferenceDir, graphDir)
+	fmt.Printf("Program `image` called with arguments input-digits-png=`%s` and output-digits-csv=`%s`\n", digitsPngDir, digitsCsvDir)
 }
