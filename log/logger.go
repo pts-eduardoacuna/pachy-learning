@@ -1,6 +1,7 @@
 package log
 
 import (
+	"fmt"
 	"log"
 	"os"
 )
@@ -25,22 +26,28 @@ func ToFile(path string) {
 
 // Print is the analog of the standard log.Print function.
 func Print(args ...interface{}) {
-	logger.Print(args...)
+	str := fmt.Sprint(args...)
+	logger.Output(2, str)
 }
 
 // Printf is the analog of the standard log.Printf function.
 func Printf(s string, args ...interface{}) {
-	logger.Printf(s, args...)
+	str := fmt.Sprintf(s, args...)
+	logger.Output(2, str)
 }
 
 // Fatal is the analog of the standard log.Fatal function.
 func Fatal(args ...interface{}) {
-	logger.Fatal(args...)
+	str := fmt.Sprint(args...)
+	logger.Output(2, str)
+	os.Exit(1)
 }
 
 // Fatalf is the analog of the standard log.Fatalf function.
 func Fatalf(s string, args ...interface{}) {
-	logger.Fatalf(s, args...)
+	str := fmt.Sprintf(s, args...)
+	logger.Output(2, str)
+	os.Exit(1)
 }
 
 // Close cleans up the log package open files.

@@ -26,7 +26,7 @@
 
 
 
-## <a name="Close">func</a> [Close](/src/target/logger.go?s=1011:1023#L37)
+## <a name="Close">func</a> [Close](/src/target/logger.go?s=1154:1166#L44)
 ``` go
 func Close()
 ```
@@ -34,7 +34,7 @@ Close cleans up the log package open files.
 
 
 
-## <a name="Fatal">func</a> [Fatal](/src/target/logger.go?s=768:799#L27)
+## <a name="Fatal">func</a> [Fatal](/src/target/logger.go?s=831:862#L30)
 ``` go
 func Fatal(args ...interface{})
 ```
@@ -42,7 +42,7 @@ Fatal is the analog of the standard log.Fatal function.
 
 
 
-## <a name="Fatalf">func</a> [Fatalf](/src/target/logger.go?s=889:931#L32)
+## <a name="Fatalf">func</a> [Fatalf](/src/target/logger.go?s=992:1034#L37)
 ``` go
 func Fatalf(s string, args ...interface{})
 ```
@@ -50,7 +50,7 @@ Fatalf is the analog of the standard log.Fatalf function.
 
 
 
-## <a name="Print">func</a> [Print](/src/target/logger.go?s=513:544#L17)
+## <a name="Print">func</a> [Print](/src/target/logger.go?s=520:551#L18)
 ``` go
 func Print(args ...interface{})
 ```
@@ -58,7 +58,7 @@ Print is the analog of the standard log.Print function.
 
 
 
-## <a name="Printf">func</a> [Printf](/src/target/logger.go?s=634:676#L22)
+## <a name="Printf">func</a> [Printf](/src/target/logger.go?s=669:711#L24)
 ``` go
 func Printf(s string, args ...interface{})
 ```
@@ -66,7 +66,7 @@ Printf is the analog of the standard log.Printf function.
 
 
 
-## <a name="ToFile">func</a> [ToFile](/src/target/logger.go?s=181:205#L2)
+## <a name="ToFile">func</a> [ToFile](/src/target/logger.go?s=188:212#L3)
 ``` go
 func ToFile(path string)
 ```
