@@ -11,3 +11,6 @@ push:
 
 clean:
 	rm infer
+
+local:
+	go build -o infer .
