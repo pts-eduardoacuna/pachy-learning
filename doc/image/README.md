@@ -13,14 +13,23 @@ Package image allows reading and writing PNG images via int slices.
 
 
 ## <a name="pkg-index">Index</a>
+* [func ReadDataset(file *os.File) (*mat.Dense, error)](#ReadDataset)
 * [func ReadPNG(file *os.File) ([]int, error)](#ReadPNG)
 * [func WritePNG(file *os.File, rows, cols int, pixels []int) error](#WritePNG)
 
 
 #### <a name="pkg-files">Package files</a>
-[png.go](/src/github.com/pts-eduardoacuna/pachy-learning/image/png.go) 
+[matrix.go](/src/github.com/pts-eduardoacuna/pachy-learning/image/matrix.go) [png.go](/src/github.com/pts-eduardoacuna/pachy-learning/image/png.go) 
 
 
+
+
+
+## <a name="ReadDataset">func</a> [ReadDataset](/src/target/matrix.go?s=113:164#L1)
+``` go
+func ReadDataset(file *os.File) (*mat.Dense, error)
+```
+ReadDataset reads a gonum matrix from a PNG file.
 
 
 
