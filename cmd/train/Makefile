@@ -11,3 +11,6 @@ push:
 
 clean:
 	rm train
+
+local:
+	go build -o train .
