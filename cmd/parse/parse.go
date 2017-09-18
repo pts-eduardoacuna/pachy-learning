@@ -99,6 +99,7 @@ func main() {
 
 	flag.Parse()
 
+	// Initialize logger
 	log.ToFile(filepath.Join(mnistCsvDir, "log"))
 	defer log.Close()
 
