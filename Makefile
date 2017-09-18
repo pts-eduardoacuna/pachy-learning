@@ -1,7 +1,7 @@
 REPO := github.com/pts-eduardoacuna/pachy-learning
 
 CMDIR := cmd
-COMMANDS := image infer parse stats train
+COMMANDS := infer parse stats train
 
 DOCDIR := doc
 PACKAGES := learning mnist csnv json image gob log
