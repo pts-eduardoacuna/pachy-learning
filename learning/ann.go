@@ -22,6 +22,7 @@ type NeuralNetwork struct {
 	LearningRate    float64
 	AttributesSize  int
 	PredictionsSize int
+	TestingError    float64
 }
 
 // NewNeuralNetwork creates a NeuralNetwork with the given learning rate and architecture.
@@ -73,6 +74,7 @@ func NewNeuralNetwork(learningRate float64, arch []int) (*NeuralNetwork, error) 
 		LearningRate:    learningRate,
 		AttributesSize:  attributesSize,
 		PredictionsSize: predictionsSize,
+		TestingError:    math.MaxFloat64,
 	}
 
 	return net, nil

@@ -3,6 +3,7 @@ package learning
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"math"
 	"os"
 )
@@ -98,13 +99,7 @@ func WriteAnalysis(analysis *Analysis, path string) error {
 
 // ReadAnalysis reads a neural network analysis in a JSON encoding from a file.
 func ReadAnalysis(path string) (*Analysis, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-
-	bytes := []byte{}
-	_, err = file.Read(bytes)
+	bytes, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}

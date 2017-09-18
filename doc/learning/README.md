@@ -84,7 +84,7 @@ of the input.
 
 
 
-## <a name="Infer">func</a> [Infer](/src/target/ann.go?s=4012:4088#L118)
+## <a name="Infer">func</a> [Infer](/src/target/ann.go?s=4073:4149#L120)
 ``` go
 func Infer(net *NeuralNetwork, attributesSet *mat.Dense) (*mat.Dense, error)
 ```
@@ -100,7 +100,7 @@ SplitTrainingValidation chooses a random sample of training attributes for const
 
 
 
-## <a name="Train">func</a> [Train](/src/target/ann.go?s=2582:2656#L76)
+## <a name="Train">func</a> [Train](/src/target/ann.go?s=2643:2717#L78)
 ``` go
 func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense) error
 ```
@@ -120,7 +120,7 @@ ValidateNeuralNetwork runs a simple training and inference check on a training a
 
 
 
-## <a name="WriteAnalysis">func</a> [WriteAnalysis](/src/target/model.go?s=2393:2450#L70)
+## <a name="WriteAnalysis">func</a> [WriteAnalysis](/src/target/model.go?s=2406:2463#L71)
 ``` go
 func WriteAnalysis(analysis *Analysis, path string) error
 ```
@@ -129,7 +129,7 @@ WriteAnalysis writes a neural network analysis in a JSON encoding to a file.
 
 
 
-## <a name="Analysis">type</a> [Analysis](/src/target/model.go?s=355:468#L4)
+## <a name="Analysis">type</a> [Analysis](/src/target/model.go?s=368:481#L5)
 ``` go
 type Analysis struct {
     Data []AnalysisValidation `json:"validation"`
@@ -147,14 +147,14 @@ the data associated with each model that was analyzed.
 
 
 
-### <a name="NewAnalysis">func</a> [NewAnalysis](/src/target/model.go?s=566:645#L10)
+### <a name="NewAnalysis">func</a> [NewAnalysis](/src/target/model.go?s=579:658#L11)
 ``` go
 func NewAnalysis(validationData []AnalysisValidation, selected Model) *Analysis
 ```
 NewAnalysis creates an Analysis reference from the given validation data and selected model.
 
 
-### <a name="ReadAnalysis">func</a> [ReadAnalysis](/src/target/model.go?s=2762:2811#L90)
+### <a name="ReadAnalysis">func</a> [ReadAnalysis](/src/target/model.go?s=2775:2824#L91)
 ``` go
 func ReadAnalysis(path string) (*Analysis, error)
 ```
@@ -164,7 +164,7 @@ ReadAnalysis reads a neural network analysis in a JSON encoding from a file.
 
 
 
-## <a name="AnalysisValidation">type</a> [AnalysisValidation](/src/target/model.go?s=1167:1321#L32)
+## <a name="AnalysisValidation">type</a> [AnalysisValidation](/src/target/model.go?s=1180:1334#L33)
 ``` go
 type AnalysisValidation struct {
     LearningRate float64                    `json:"learningRate"`
@@ -182,7 +182,7 @@ AnalysisValidation holds the validation results associated with a learning rate.
 
 
 
-## <a name="AnalysisValidationResult">type</a> [AnalysisValidationResult](/src/target/model.go?s=1437:1622#L38)
+## <a name="AnalysisValidationResult">type</a> [AnalysisValidationResult](/src/target/model.go?s=1450:1635#L39)
 ``` go
 type AnalysisValidationResult struct {
     Architecture    []int   `json:"architecture"`
@@ -201,7 +201,7 @@ AnalysisValidationResult hold the training and validation error associated with 
 
 
 
-## <a name="Model">type</a> [Model](/src/target/model.go?s=769:878#L18)
+## <a name="Model">type</a> [Model](/src/target/model.go?s=782:891#L19)
 ``` go
 type Model struct {
     LearningRate float64 `json:"learningRate"`
@@ -216,14 +216,14 @@ Model describes a description of a neural network.
 
 
 
-### <a name="NewModel">func</a> [NewModel](/src/target/model.go?s=970:1015#L24)
+### <a name="NewModel">func</a> [NewModel](/src/target/model.go?s=983:1028#L25)
 ``` go
 func NewModel(rate float64, arch []int) Model
 ```
 NewModel creates a neural network Model from the given learning rate and architecture.
 
 
-### <a name="SelectBestModel">func</a> [SelectBestModel](/src/target/model.go?s=1744:1816#L45)
+### <a name="SelectBestModel">func</a> [SelectBestModel](/src/target/model.go?s=1757:1829#L46)
 ``` go
 func SelectBestModel(validationData []AnalysisValidation) (Model, error)
 ```
@@ -233,7 +233,7 @@ SelectBestModel receives a slice of AnalysisValidation and returns the model whi
 
 
 
-## <a name="NeuralNetwork">type</a> [NeuralNetwork](/src/target/ann.go?s=227:522#L4)
+## <a name="NeuralNetwork">type</a> [NeuralNetwork](/src/target/ann.go?s=227:547#L4)
 ``` go
 type NeuralNetwork struct {
     Signals         []*mat.Dense
@@ -246,6 +246,7 @@ type NeuralNetwork struct {
     LearningRate    float64
     AttributesSize  int
     PredictionsSize int
+    TestingError    float64
 }
 ```
 NeuralNetwork is a supervised learning model for classification.
@@ -256,7 +257,7 @@ NeuralNetwork is a supervised learning model for classification.
 
 
 
-### <a name="NewNeuralNetwork">func</a> [NewNeuralNetwork](/src/target/ann.go?s=825:904#L22)
+### <a name="NewNeuralNetwork">func</a> [NewNeuralNetwork](/src/target/ann.go?s=850:929#L23)
 ``` go
 func NewNeuralNetwork(learningRate float64, arch []int) (*NeuralNetwork, error)
 ```
