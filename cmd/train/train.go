@@ -50,6 +50,7 @@ func main() {
 
 	flag.Parse()
 
+	// Initialize logger
 	log.ToFile(filepath.Join(modelDir, "log"))
 	defer log.Close()
 
