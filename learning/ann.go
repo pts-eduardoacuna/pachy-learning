@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
+	"time"
 
 	"gonum.org/v1/gonum/mat"
 )
@@ -155,14 +156,15 @@ func Infer(net *NeuralNetwork, attributesSet *mat.Dense) (*mat.Dense, error) {
 func newRandomWeightMatrix(rows, cols int) *mat.Dense {
 	data := make([]float64, rows*cols)
 	for i := range data {
-		w := rand.Float64()
-		if i%2 == 0 {
-			w = -w
-		}
-		data[i] = w
+		data[i] = randomInRange(-.5, .5)
 	}
 
 	return mat.NewDense(rows, cols, data)
+}
+
+func randomInRange(low, high float64) float64 {
+	r := rand.Float64()
+	return r*(high-low) + low
 }
 
 func forwardPropagation(net *NeuralNetwork) {
@@ -250,4 +252,9 @@ func bernoulliVariance(p float64) float64 {
 
 func square(x float64) float64 {
 	return x * x
+}
+
+func init() {
+	t := time.Now()
+	rand.Seed(t.Unix())
 }

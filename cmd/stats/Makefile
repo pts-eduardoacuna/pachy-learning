@@ -11,3 +11,6 @@ push:
 
 clean:
 	rm stats
+
+local:
+	go build -o stats .

@@ -13,20 +13,78 @@ Package learning allows training and inference with ML models.
 
 
 ## <a name="pkg-index">Index</a>
+* [func ArgMax(xs []float64) int](#ArgMax)
+* [func ComputeError(net *NeuralNetwork, inputs, expected *mat.Dense) (float64, error)](#ComputeError)
+* [func DecodeTargets(targets []float64) float64](#DecodeTargets)
+* [func EncodeAttributes(xs []float64) []float64](#EncodeAttributes)
+* [func EncodeTarget(target float64) []float64](#EncodeTarget)
 * [func Infer(net *NeuralNetwork, attributesSet *mat.Dense) (*mat.Dense, error)](#Infer)
+* [func SplitTrainingValidation(validationPercent int, inputs, outputs *mat.Dense) (*mat.Dense, *mat.Dense, *mat.Dense, *mat.Dense)](#SplitTrainingValidation)
 * [func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense) error](#Train)
+* [func ValidateNeuralNetwork(tInputs, tOutputs, vInputs, vOutputs *mat.Dense, rate float64, arch []int) (float64, float64, error)](#ValidateNeuralNetwork)
+* [func WriteAnalysis(analysis *Analysis, path string) error](#WriteAnalysis)
+* [type Analysis](#Analysis)
+  * [func NewAnalysis(validationData []AnalysisValidation, selected Model) *Analysis](#NewAnalysis)
+  * [func ReadAnalysis(path string) (*Analysis, error)](#ReadAnalysis)
+* [type AnalysisValidation](#AnalysisValidation)
+* [type AnalysisValidationResult](#AnalysisValidationResult)
+* [type Model](#Model)
+  * [func NewModel(rate float64, arch []int) Model](#NewModel)
+  * [func SelectBestModel(validationData []AnalysisValidation) (Model, error)](#SelectBestModel)
 * [type NeuralNetwork](#NeuralNetwork)
   * [func NewNeuralNetwork(learningRate float64, arch []int) (*NeuralNetwork, error)](#NewNeuralNetwork)
 
 
 #### <a name="pkg-files">Package files</a>
-[ann.go](/src/github.com/pts-eduardoacuna/pachy-learning/learning/ann.go) 
+[ann.go](/src/github.com/pts-eduardoacuna/pachy-learning/learning/ann.go) [encoding.go](/src/github.com/pts-eduardoacuna/pachy-learning/learning/encoding.go) [model.go](/src/github.com/pts-eduardoacuna/pachy-learning/learning/model.go) [validation.go](/src/github.com/pts-eduardoacuna/pachy-learning/learning/validation.go) 
 
 
 
 
 
-## <a name="Infer">func</a> [Infer](/src/target/ann.go?s=4004:4080#L117)
+## <a name="ArgMax">func</a> [ArgMax](/src/target/encoding.go?s=885:914#L23)
+``` go
+func ArgMax(xs []float64) int
+```
+ArgMax takes an array of numbers and returns the index of the maximum value.
+
+
+
+## <a name="ComputeError">func</a> [ComputeError](/src/target/validation.go?s=1880:1963#L54)
+``` go
+func ComputeError(net *NeuralNetwork, inputs, expected *mat.Dense) (float64, error)
+```
+ComputeError checks how many unsuccessful predictions the neural network makes.
+
+
+
+## <a name="DecodeTargets">func</a> [DecodeTargets](/src/target/encoding.go?s=721:766#L18)
+``` go
+func DecodeTargets(targets []float64) float64
+```
+DecodeTargets takes an array of numbers and returns the index of the maximum value.
+
+
+
+## <a name="EncodeAttributes">func</a> [EncodeAttributes](/src/target/encoding.go?s=168:213#L1)
+``` go
+func EncodeAttributes(xs []float64) []float64
+```
+EncodeAttributes applies a hard threshold on the [0,255] range of values of an array such that
+any number other than 0 is transformed into a 1.
+
+
+
+## <a name="EncodeTarget">func</a> [EncodeTarget](/src/target/encoding.go?s=489:532#L9)
+``` go
+func EncodeTarget(target float64) []float64
+```
+EncodeTarget takes a number between [0,9] and computes an array of zeros with a 1 in the position
+of the input.
+
+
+
+## <a name="Infer">func</a> [Infer](/src/target/ann.go?s=4012:4088#L118)
 ``` go
 func Infer(net *NeuralNetwork, attributesSet *mat.Dense) (*mat.Dense, error)
 ```
@@ -34,7 +92,15 @@ Infer user the network to evaluate each row in the attributes dataset.
 
 
 
-## <a name="Train">func</a> [Train](/src/target/ann.go?s=2574:2648#L75)
+## <a name="SplitTrainingValidation">func</a> [SplitTrainingValidation](/src/target/validation.go?s=179:307#L1)
+``` go
+func SplitTrainingValidation(validationPercent int, inputs, outputs *mat.Dense) (*mat.Dense, *mat.Dense, *mat.Dense, *mat.Dense)
+```
+SplitTrainingValidation chooses a random sample of training attributes for constructing a validation set.
+
+
+
+## <a name="Train">func</a> [Train](/src/target/ann.go?s=2582:2656#L76)
 ``` go
 func Train(net *NeuralNetwork, attributesSet, targetsSet *mat.Dense) error
 ```
@@ -46,8 +112,128 @@ dimension of the first and last layer of the network.
 
 
 
+## <a name="ValidateNeuralNetwork">func</a> [ValidateNeuralNetwork](/src/target/validation.go?s=1291:1418#L29)
+``` go
+func ValidateNeuralNetwork(tInputs, tOutputs, vInputs, vOutputs *mat.Dense, rate float64, arch []int) (float64, float64, error)
+```
+ValidateNeuralNetwork runs a simple training and inference check on a training and validation set.
 
-## <a name="NeuralNetwork">type</a> [NeuralNetwork](/src/target/ann.go?s=219:514#L3)
+
+
+## <a name="WriteAnalysis">func</a> [WriteAnalysis](/src/target/model.go?s=2393:2450#L70)
+``` go
+func WriteAnalysis(analysis *Analysis, path string) error
+```
+WriteAnalysis writes a neural network analysis in a JSON encoding to a file.
+
+
+
+
+## <a name="Analysis">type</a> [Analysis](/src/target/model.go?s=355:468#L4)
+``` go
+type Analysis struct {
+    Data []AnalysisValidation `json:"validation"`
+    Best Model                `json:"model"`
+}
+```
+Analysis holds the results of training a variety of neural network architectures with different learning rates.
+
+It holds the result of the best architecture and learning rate according to a validation analysis, and also
+the data associated with each model that was analyzed.
+
+
+
+
+
+
+
+### <a name="NewAnalysis">func</a> [NewAnalysis](/src/target/model.go?s=566:645#L10)
+``` go
+func NewAnalysis(validationData []AnalysisValidation, selected Model) *Analysis
+```
+NewAnalysis creates an Analysis reference from the given validation data and selected model.
+
+
+### <a name="ReadAnalysis">func</a> [ReadAnalysis](/src/target/model.go?s=2762:2811#L90)
+``` go
+func ReadAnalysis(path string) (*Analysis, error)
+```
+ReadAnalysis reads a neural network analysis in a JSON encoding from a file.
+
+
+
+
+
+## <a name="AnalysisValidation">type</a> [AnalysisValidation](/src/target/model.go?s=1167:1321#L32)
+``` go
+type AnalysisValidation struct {
+    LearningRate float64                    `json:"learningRate"`
+    Models       []AnalysisValidationResult `json:"models"`
+}
+```
+AnalysisValidation holds the validation results associated with a learning rate.
+
+
+
+
+
+
+
+
+
+
+## <a name="AnalysisValidationResult">type</a> [AnalysisValidationResult](/src/target/model.go?s=1437:1622#L38)
+``` go
+type AnalysisValidationResult struct {
+    Architecture    []int   `json:"architecture"`
+    TrainingError   float64 `json:"trainingError"`
+    ValidationError float64 `json:"validationError"`
+}
+```
+AnalysisValidationResult hold the training and validation error associated with a neural network architecture.
+
+
+
+
+
+
+
+
+
+
+## <a name="Model">type</a> [Model](/src/target/model.go?s=769:878#L18)
+``` go
+type Model struct {
+    LearningRate float64 `json:"learningRate"`
+    Architecture []int   `json:"architecture"`
+}
+```
+Model describes a description of a neural network.
+
+
+
+
+
+
+
+### <a name="NewModel">func</a> [NewModel](/src/target/model.go?s=970:1015#L24)
+``` go
+func NewModel(rate float64, arch []int) Model
+```
+NewModel creates a neural network Model from the given learning rate and architecture.
+
+
+### <a name="SelectBestModel">func</a> [SelectBestModel](/src/target/model.go?s=1744:1816#L45)
+``` go
+func SelectBestModel(validationData []AnalysisValidation) (Model, error)
+```
+SelectBestModel receives a slice of AnalysisValidation and returns the model which has the minimum validation error.
+
+
+
+
+
+## <a name="NeuralNetwork">type</a> [NeuralNetwork](/src/target/ann.go?s=227:522#L4)
 ``` go
 type NeuralNetwork struct {
     Signals         []*mat.Dense
@@ -70,7 +256,7 @@ NeuralNetwork is a supervised learning model for classification.
 
 
 
-### <a name="NewNeuralNetwork">func</a> [NewNeuralNetwork](/src/target/ann.go?s=817:896#L21)
+### <a name="NewNeuralNetwork">func</a> [NewNeuralNetwork](/src/target/ann.go?s=825:904#L22)
 ``` go
 func NewNeuralNetwork(learningRate float64, arch []int) (*NeuralNetwork, error)
 ```

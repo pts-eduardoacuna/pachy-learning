@@ -4,15 +4,13 @@ import (
 	"encoding/csv"
 	"flag"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 
 	"github.com/pts-eduardoacuna/pachy-learning/csnv"
+	"github.com/pts-eduardoacuna/pachy-learning/log"
 	"github.com/pts-eduardoacuna/pachy-learning/mnist"
 )
-
-var logger *log.Logger
 
 const (
 	trainingFilename       = "train"
@@ -25,14 +23,14 @@ const (
 
 func processDataset(inputImagesName, inputLabelsName, outputName string) error {
 	// Open input files
-	logger.Print("opening input file", inputImagesName)
+	log.Printf("opening input file: path=%s", inputImagesName)
 	inputImages, err := os.Open(inputImagesName)
 	if err != nil {
 		return err
 	}
 	defer inputImages.Close()
 
-	logger.Print("opening input file", inputLabelsName)
+	log.Print("opening input file: path=%s", inputLabelsName)
 	inputLabels, err := os.Open(inputLabelsName)
 	if err != nil {
 		return err
@@ -40,7 +38,7 @@ func processDataset(inputImagesName, inputLabelsName, outputName string) error {
 	defer inputLabels.Close()
 
 	// Create output files
-	logger.Print("creating output file", outputName)
+	log.Print("creating output file: path=%s", outputName)
 	output, err := os.Create(outputName)
 	if err != nil {
 		return err
@@ -48,13 +46,13 @@ func processDataset(inputImagesName, inputLabelsName, outputName string) error {
 	defer output.Close()
 
 	// Make input parsers
-	logger.Print("making image parser")
+	log.Print("making image parser")
 	imageParser, err := mnist.NewImageParser(inputImages)
 	if err != nil {
 		return err
 	}
 
-	logger.Print("making labels parser")
+	log.Print("making labels parser")
 	labelParser, err := mnist.NewLabelParser(inputLabels)
 	if err != nil {
 		return err
@@ -65,11 +63,11 @@ func processDataset(inputImagesName, inputLabelsName, outputName string) error {
 	}
 
 	// Make output writer
-	logger.Print("making output CSV writer")
+	log.Print("making output CSV writer")
 	outputWriter := csv.NewWriter(output)
 
 	// Transform inputs into outputs
-	logger.Print("processing images with labels")
+	log.Print("processing images with labels")
 	for i := 0; i < imageParser.Count; i++ {
 		img, err := imageParser.Parse()
 		if err != nil {
@@ -81,8 +79,11 @@ func processDataset(inputImagesName, inputLabelsName, outputName string) error {
 		}
 		entry := append(img, lbl)
 		csnv.WriteInts(outputWriter, entry)
-		logger.Printf("entry %d written (%d%%)", i+1, int(100.0*float64(i+1)/float64(imageParser.Count)))
+		log.Printf("entry %d written (%d%%)", i+1, int(100.0*float64(i+1)/float64(imageParser.Count)))
 	}
+
+	outputWriter.Flush()
+
 	return nil
 }
 
@@ -93,19 +94,13 @@ func main() {
 	var mnistDir string
 	var mnistCsvDir string
 
-	flag.StringVar(&mnistDir, "input-mnist", "", "The directory containing the uncompressed MNIST data files.")
-	flag.StringVar(&mnistCsvDir, "output-mnist-csv", "", "The mnist-csv data output directory.")
+	flag.StringVar(&mnistDir, "input-mnist", ".", "The directory containing the uncompressed MNIST data files.")
+	flag.StringVar(&mnistCsvDir, "output-mnist-csv", ".", "The mnist-csv data output directory.")
 
 	flag.Parse()
 
-	// Initialize logger
-	logfile, err := os.Create(filepath.Join(mnistCsvDir, "log"))
-	if err != nil {
-		log.Fatal("couldn't create logfile")
-	}
-	defer logfile.Close()
-
-	logger = createLogger(logfile)
+	log.ToFile(filepath.Join(mnistCsvDir, "log"))
+	defer log.Close()
 
 	// Process training and testing datasets
 	trainingImagesPath := filepath.Join(mnistDir, trainingImagesFilename)
@@ -116,19 +111,15 @@ func main() {
 	testingLabelsPath := filepath.Join(mnistDir, testingLabelsFilename)
 	testingPath := filepath.Join(mnistCsvDir, testingFilename)
 
-	logger.Print("processing training dataset")
+	log.Print("processing training dataset")
 	err = processDataset(trainingImagesPath, trainingLabelsPath, trainingPath)
 	if err != nil {
-		logger.Println("there were problems processing the training dataset, this is essential for training a model", err)
+		log.Fatalf("there were problems processing the training dataset, this is essential for training a model: error=%v", err)
 	}
 
-	logger.Print("processing testing dataset")
+	log.Print("processing testing dataset")
 	err = processDataset(testingImagesPath, testingLabelsPath, testingPath)
 	if err != nil {
-		logger.Println("there were problems processing the testing dataset, this is important for measuring a model's peformance", err)
+		log.Fatalf("there were problems processing the testing dataset, this is important for measuring a model's peformance: error=%v", err)
 	}
-}
-
-func createLogger(file *os.File) *log.Logger {
-	return log.New(file, "❯ ", log.LstdFlags|log.Lshortfile)
 }

@@ -11,3 +11,6 @@ push:
 
 clean:
 	rm parse
+
+local:
+	go build -o parse .
