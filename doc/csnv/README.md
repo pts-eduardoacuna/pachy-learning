@@ -13,6 +13,7 @@
 ## <a name="pkg-index">Index</a>
 * [func ReadAllFloats(r *csv.Reader) ([][]float64, error)](#ReadAllFloats)
 * [func ReadAllInts(r *csv.Reader) ([][]int, error)](#ReadAllInts)
+* [func ReadDataset(file *os.File) (*mat.Dense, *mat.Dense, error)](#ReadDataset)
 * [func ReadFloats(r *csv.Reader) ([]float64, error)](#ReadFloats)
 * [func ReadInts(r *csv.Reader) ([]int, error)](#ReadInts)
 * [func WriteAllFloats(w *csv.Writer, allFloats [][]float64) error](#WriteAllFloats)
@@ -22,7 +23,7 @@
 
 
 #### <a name="pkg-files">Package files</a>
-[numeric.go](/src/github.com/pts-eduardoacuna/pachy-learning/csnv/numeric.go) 
+[matrix.go](/src/github.com/pts-eduardoacuna/pachy-learning/csnv/matrix.go) [numeric.go](/src/github.com/pts-eduardoacuna/pachy-learning/csnv/numeric.go) 
 
 
 
@@ -41,6 +42,14 @@ ReadAllFloats is a wrapper around the standard CSV ReadAll for records containin
 func ReadAllInts(r *csv.Reader) ([][]int, error)
 ```
 ReadAllInts is a wrapper around the standard CSV ReadAll for records containing int.
+
+
+
+## <a name="ReadDataset">func</a> [ReadDataset](/src/target/matrix.go?s=239:302#L4)
+``` go
+func ReadDataset(file *os.File) (*mat.Dense, *mat.Dense, error)
+```
+ReadDataset reads a numeric CSV file and computes the attributes and targets as gonum's matrices.
 
 
 
