@@ -1,9 +1,7 @@
 package main
 
 import (
-	"encoding/csv"
 	"flag"
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -28,36 +26,8 @@ func processDataset(filepath string) (*mat.Dense, *mat.Dense, error) {
 	}
 	defer file.Close()
 
-	// Read it's content
-	log.Printf("reading %v as CSV", filepath)
-	r := csv.NewReader(file)
-	records, err := csnv.ReadAllFloats(r)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// Verify integrity of the records
-	log.Printf("verifying CSV integrity")
-	rows := len(records)
-	if rows < 1 {
-		return nil, nil, fmt.Errorf("expecting at least one record in %s", filepath)
-	}
-	columns := len(records[0])
-	for _, record := range records {
-		if len(record) != columns {
-			return nil, nil, fmt.Errorf("malformed records in %s, expecting the same amount of entries per record", filepath)
-		}
-	}
-
-	// Construct gonum's dense matrices for attributes and targets
-	log.Printf("creating gonum's matrices from the CSV file")
-	attributes := mat.NewDense(rows, columns-1, nil)
-	targets := mat.NewDense(rows, 10, nil)
-
-	for row, record := range records {
-		attributes.SetRow(row, learning.EncodeAttributes(record[0:len(record)-1]))
-		targets.SetRow(row, learning.EncodeTarget(record[len(record)-1]))
-	}
+	// Read its content
+	attributes, targets, err := csnv.ReadDataset(file)
 
 	return attributes, targets, nil
 }
