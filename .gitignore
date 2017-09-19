@@ -76,3 +76,7 @@ flycheck_*.el
 
 # Testfiles
 *_testfile
+
+# inputs and outputs
+input-*/
+output/
