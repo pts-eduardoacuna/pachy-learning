@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	"github.com/pts-eduardoacuna/pachy-learning/gob"
 	"github.com/pts-eduardoacuna/pachy-learning/image"
@@ -83,7 +84,9 @@ func main() {
 
 		outpath := filepath.Join(inferenceDir, info.Name())
 		log.Printf("writing prediction to file: path=%v", outpath)
-		if err := ioutil.WriteFile(outpath, []byte(string(int(decoded))), 0644); err != nil {
+
+		str := strconv.FormatFloat(decoded, 'f', 0, 64)
+		if err := ioutil.WriteFile(outpath, []byte(str), 0644); err != nil {
 			log.Fatalf("there was a problem writing to a file: error=%v", err)
 		}
 
