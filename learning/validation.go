@@ -67,18 +67,29 @@ func ComputeError(net *NeuralNetwork, inputs, expected *mat.Dense) (float64, err
 		return 0, err
 	}
 
+	totals := make([]int, 10)
+	successes := make([]int, 10)
+
 	rows, _ := expected.Dims()
-	score := 0
 	for i := 0; i < rows; i++ {
 		correct := DecodeTargets(expected.RawRowView(i))
 		predicted := DecodeTargets(predictions.RawRowView(i))
 
+		totals[int(correct)] = totals[int(correct)] + 1
+
 		if correct == predicted {
-			score++
+			successes[int(correct)] = successes[int(correct)] + 1
 		}
 	}
 
-	incorrect := 1.0 - (float64(score) / float64(rows))
+	errors := make([]float64, 10)
+	max := 0.0
+	for i := 0; i < 10; i++ {
+		errors[i] = 1.0 - (float64(successes[i]) / float64(totals[i]))
+		if errors[i] > max {
+			max = errors[i]
+		}
+	}
 
-	return incorrect, nil
+	return max, nil
 }
